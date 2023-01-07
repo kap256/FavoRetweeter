@@ -1,0 +1,7 @@
+{
+  "name": "756e7162_a066_4e77_favoretweeter",
+  "description": "favoretweeter",
+  "path": "FavoRetweeter.exe",
+  "type": "stdio",
+  "allowed_extensions": [ "favoretweeter@kap256.github.com" ]
+}

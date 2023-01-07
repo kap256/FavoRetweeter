@@ -1,0 +1,10 @@
+header[role="banner"] {
+    display: none;
+}
+div[data-testid = "cellInnerDiv"]:has([data-testid = "placementTracking"]) {
+    display: none;
+}
+div[role="progressbar"] +div:has([data-testid = "tweetButtonInline"]){
+    display: none;
+}
+

@@ -1,0 +1,1 @@
+web-ext run -f "C:\Program Files\Mozilla Firefox\firefox.exe" --firefox-profile=Test --verbose --devtools

@@ -1,0 +1,31 @@
+{
+
+  "description": "ファボでもリツイートでも帝国でもない",
+  "manifest_version": 2,
+  "name": "favoretweeter",
+  "version": "1.0",
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "*://twitter.com/*" ],
+      "js": [ "fr_content.js", "fr_common.js" ],
+      "run_at": "document_start"
+    }
+  ],
+
+  "background": {
+    "scripts": [ "fr_background.js" ]
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "favoretweeter@kap256.github.com",
+      "strict_min_version": "50.0"
+    }
+  },
+
+  "permissions": [ "nativeMessaging" ]
+}

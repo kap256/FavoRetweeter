@@ -1,0 +1,10 @@
+/*リンクや画像の高さを制限する*/
+div[aria-labelledby*="id"]:has(a) * {
+    max-height: 160px;
+}
+
+/*ホバーしたときに出るカードが邪魔*/
+div[data-testid = "HoverCard"] {
+    display: none;
+}
+
