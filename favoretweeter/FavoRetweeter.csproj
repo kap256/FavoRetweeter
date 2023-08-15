@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\KAPLibNet\KAPLibNet.csproj" />
+    <ProjectReference Include="..\KAPLibNet\KAPLibNet.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="favoretweeter.firefox.json">

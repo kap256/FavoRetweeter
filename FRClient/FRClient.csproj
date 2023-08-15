@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FavoRetweeter\FavoRetweeter.csproj" />
+    <ProjectReference Include="..\KAPLibNet\KAPLibNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
