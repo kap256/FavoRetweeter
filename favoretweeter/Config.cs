@@ -8,6 +8,7 @@ namespace FavoRetweeter
     {
         public static Config Instance => ISingletonLike<Config>.Instance;
 
+        public static ConfBool IsCloseDeactive;
         public static ConfBool IsSendMastodon;
         public static ConfStr MastodonInstance;
         public static ConfStr MastodonAccessToken;
@@ -27,7 +28,8 @@ namespace FavoRetweeter
         static Config()
         {
             var ins = Instance;
-            IsSendMastodon = new(ins, "send_mastodon",true);
+            IsCloseDeactive = new(ins, "close_deactive", true);
+            IsSendMastodon = new(ins, "send_mastodon", true);
             MastodonInstance = new(ins, "mastodon_instance", "mstdn.jp/");
             MastodonAccessToken = new(ins, "mastodon_access_token", "");
             MastodonVisibility = new(ins, "mastodon_visibility", Visibility.Public);

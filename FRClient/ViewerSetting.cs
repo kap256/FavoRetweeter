@@ -16,12 +16,14 @@ namespace FRClient
         {
             public string URI;
             public StrInt Width=320;
+            public string Profile = "";
 
             public StrBool IsHalf=false;
             public string HalfURI;
 
             public string Script;
             public string Style;
+
             
 
         }

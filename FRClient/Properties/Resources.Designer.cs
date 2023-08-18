@@ -90,28 +90,29 @@ namespace FRClient.Properties {
         
         /// <summary>
         ///   
-        ///console.log(&quot;load common&quot;);
+        ///console.log(&quot;load common.&quot;);
         ///var LAST_RT_HREF = &quot;&quot;;
         ///
+        ///
         ///function send_common() {
+        ///
+        ///    //返信のような気がする……
+        ///    if (document.querySelectorAll(&quot;article&quot;).length &gt; 0) {
+        ///        mylog(&quot;maybe reply&quot;);
+        ///        return;
+        ///    }
         ///
         ///    //本文の取得
         ///    let text = &quot;&quot;;
         ///    let editor = document.getElementsByClassName(&quot;DraftEditor-root&quot;);
         ///
         ///    if (editor.length &lt;= 0) {
-        ///        console.log(&quot;editor not found.&quot;);
+        ///        mylog(&quot;editor not found.&quot;);
         ///        return;
         ///    }
         ///    text += editor[0].innerText;
         ///    if (text.includes(&quot;いまどうしてる？&quot;)) {
-        ///        console.log(&quot;maybe no text&quot;);
-        ///        return;
-        ///    }
-        ///
-        ///    //リツイートの取得（あれば）
-        ///    let rt_text = &quot;&quot;;
-        ///    let at = document.querySelector(&apos;[data [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///        mylog(&quot;ma [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string fr_common {
             get {
@@ -122,10 +123,17 @@ namespace FRClient.Properties {
         /// <summary>
         ///   
         ///console.log(&quot;load for net&quot;);
+        ///
+        ///function mylog(text) {
+        ///
+        ///    console.log(text);
+        ///    window.chrome.webview.postMessage(&quot;LG&quot; + text);
+        ///}
+        ///
         ///function send_fr_message(message) {
         ///
         ///    console.log(&quot;send_fr_message:&quot; + message);
-        ///    window.chrome.webview.postMessage(message);
+        ///    window.chrome.webview.postMessage(&quot;MS&quot;+message);
         ///
         ///}; に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -146,6 +154,25 @@ namespace FRClient.Properties {
         }
         
         /// <summary>
+        ///   /*リンクや画像の高さを制限する*/
+        ///div[aria-labelledby*=&quot;id&quot;]:has(a) * {
+        ///    max-height: 160px;
+        ///}
+        ///
+        ////*ホバーしたときに出るカードが邪魔*/
+        ///div[data-testid = &quot;HoverCard&quot;] {
+        ///    display: none;
+        ///}
+        ///
+        /// に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string sample_css {
+            get {
+                return ResourceManager.GetString("sample_css", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   header[role=&quot;banner&quot;] {
         ///    display: none;
         ///}
@@ -156,13 +183,7 @@ namespace FRClient.Properties {
         ///    display: none;
         ///}
         ///
-        ////*
-        ///    リンクや画像の高さを制限する
-        ///div[aria-labelledby]:has(a) * {
-        ///    max-height: 100px;
-        ///}
-        ///
-        ///*/ に類似しているローカライズされた文字列を検索します。
+        /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string style_twitter_common {
             get {
@@ -171,23 +192,10 @@ namespace FRClient.Properties {
         }
         
         /// <summary>
-        ///   header.{
-        ///    display: none;
+        ///   div:has(&gt;div&gt;div&gt;div&gt;div&gt;label) {
+        ///    height: 75vh;
         ///}
-        ///div[data-testid = &quot;cellInnerDiv&quot;]:has([data-testid = &quot;placementTracking&quot;]) {
-        ///    display: none;
-        ///}
-        ///div[role=&quot;progressbar&quot;] +div:has([data-testid = &quot;tweetButtonInline&quot;]){
-        ///    display: none;
-        ///}
-        ///
-        ////*
-        ///    リンクや画像の高さを制限する
-        ///div[aria-labelledby]:has(a) * {
-        ///    max-height: 100px;
-        ///}
-        ///
-        ///*/ に類似しているローカライズされた文字列を検索します。
+        /// に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string style_twitter_post {
             get {

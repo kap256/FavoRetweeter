@@ -36,6 +36,9 @@ namespace FRClient
 
         #endregion
 
+
+        public Uri PostUri { get; set; }
+
         public FRPostWebView()
         {
             CSS.CSS = Resources.style_twitter_post;
@@ -43,7 +46,7 @@ namespace FRClient
 
         protected override bool IsBlockRequest(CoreWebView2 core, CoreWebView2WebResourceRequestedEventArgs e)
         {
-            var uri = State.PostUri.ToString();
+            var uri = PostUri.ToString();
             if (e.Request.Uri == uri) return false;
             if (core.Source == uri) {
                 //放置しているだけで定期的に通信するようなもの以外は通す
@@ -56,8 +59,7 @@ namespace FRClient
         }
         protected override async Task OnSourceChange()
         {
-
-            if (State.PostUri != Source) {
+            if (PostUri != Source) {
                 //遷移を拒否する
                 GoBack();
                 return;

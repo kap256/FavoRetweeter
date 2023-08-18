@@ -35,9 +35,12 @@
             Panel panel3;
             Panel panel2;
             Panel panel1;
+            Label label5;
             FlowLayoutPanel flowLayoutPanel1;
             textBoxCSS = new TextBox();
+            buttonSampleCSS = new Button();
             textBoxScript = new TextBox();
+            textBoxProfile = new TextBox();
             checkBoxHalf = new CheckBox();
             textBoxHalf = new TextBox();
             textBoxUrl = new TextBox();
@@ -53,6 +56,7 @@
             panel3 = new Panel();
             panel2 = new Panel();
             panel1 = new Panel();
+            label5 = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             tableLayoutPanel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -111,7 +115,7 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 110F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 150F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
@@ -122,10 +126,11 @@
             // 
             panel3.Controls.Add(textBoxCSS);
             panel3.Controls.Add(label4);
+            panel3.Controls.Add(buttonSampleCSS);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(3, 263);
+            panel3.Location = new Point(3, 283);
             panel3.Name = "panel3";
-            panel3.Size = new Size(618, 144);
+            panel3.Size = new Size(618, 124);
             panel3.TabIndex = 2;
             // 
             // textBoxCSS
@@ -138,19 +143,31 @@
             textBoxCSS.Multiline = true;
             textBoxCSS.Name = "textBoxCSS";
             textBoxCSS.ScrollBars = ScrollBars.Both;
-            textBoxCSS.Size = new Size(608, 123);
+            textBoxCSS.Size = new Size(608, 103);
             textBoxCSS.TabIndex = 7;
             textBoxCSS.WordWrap = false;
             textBoxCSS.TextChanged += textBoxCSS_TextChanged;
+            // 
+            // buttonSampleCSS
+            // 
+            buttonSampleCSS.Font = new Font("Yu Gothic UI", 6F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonSampleCSS.Location = new Point(540, 0);
+            buttonSampleCSS.Margin = new Padding(1);
+            buttonSampleCSS.Name = "buttonSampleCSS";
+            buttonSampleCSS.Size = new Size(75, 18);
+            buttonSampleCSS.TabIndex = 3;
+            buttonSampleCSS.Text = "サンプル";
+            buttonSampleCSS.UseVisualStyleBackColor = true;
+            buttonSampleCSS.Click += buttonSampleCSS_Click;
             // 
             // panel2
             // 
             panel2.Controls.Add(textBoxScript);
             panel2.Controls.Add(label3);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(3, 113);
+            panel2.Location = new Point(3, 153);
             panel2.Name = "panel2";
-            panel2.Size = new Size(618, 144);
+            panel2.Size = new Size(618, 124);
             panel2.TabIndex = 1;
             // 
             // textBoxScript
@@ -163,13 +180,15 @@
             textBoxScript.Multiline = true;
             textBoxScript.Name = "textBoxScript";
             textBoxScript.ScrollBars = ScrollBars.Both;
-            textBoxScript.Size = new Size(608, 123);
+            textBoxScript.Size = new Size(608, 103);
             textBoxScript.TabIndex = 6;
             textBoxScript.WordWrap = false;
             textBoxScript.TextChanged += textBoxScript_TextChanged;
             // 
             // panel1
             // 
+            panel1.Controls.Add(textBoxProfile);
+            panel1.Controls.Add(label5);
             panel1.Controls.Add(checkBoxHalf);
             panel1.Controls.Add(textBoxHalf);
             panel1.Controls.Add(label1);
@@ -180,8 +199,27 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(618, 104);
+            panel1.Size = new Size(618, 144);
             panel1.TabIndex = 0;
+            // 
+            // textBoxProfile
+            // 
+            textBoxProfile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxProfile.Location = new Point(169, 118);
+            textBoxProfile.Name = "textBoxProfile";
+            textBoxProfile.Size = new Size(440, 23);
+            textBoxProfile.TabIndex = 9;
+            textBoxProfile.TextChanged += textBoxProfile_TextChanged;
+            // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label5.AutoSize = true;
+            label5.Location = new Point(3, 121);
+            label5.Name = "label5";
+            label5.Size = new Size(160, 15);
+            label5.TabIndex = 8;
+            label5.Text = "プロファイル（空欄でデフォルト）";
             // 
             // checkBoxHalf
             // 
@@ -281,8 +319,10 @@
             MinimizeBox = false;
             MinimumSize = new Size(640, 480);
             Name = "ViewerSettingForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "カラムの設定";
+            FormClosed += ViewerSettingForm_FormClosed;
             tableLayoutPanel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
@@ -307,5 +347,7 @@
         private Button buttonComplete;
         private CheckBox checkBoxHalf;
         private TextBox textBoxHalf;
+        private TextBox textBoxProfile;
+        private Button buttonSampleCSS;
     }
 }

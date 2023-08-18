@@ -13,6 +13,15 @@ namespace FRClient
 
         public ListBox.ObjectCollection Images => listImages.Items;
         public bool IsPostStop => checkPostStop.Checked;
+        public Visibility Visibility {
+            get {
+                Visibility ret;
+                if (!Enum.TryParse<Visibility>(comboBoxVisble.SelectedItem.ToString(), out ret)) {
+                    return Config.MastodonVisibility;
+                }
+                return ret;
+            }
+        }
 
         public readonly Uri PostUri;
         private readonly float ExpandWidth;
@@ -39,15 +48,25 @@ namespace FRClient
 #endif
             ExpandWidth = tableLayoutPanel.ColumnStyles[0].Width;
             ExpandGoal = ExpandWidth;
-            PostUri = webViewPost.Source;
-            State.SetClient(this);
-
+            webViewPost.PostUri = webViewPost.Source;
+            webViewPost.Handler = this;
 
             Log.Info($"====== Start @ {DateTime.Now} ======");
 
             this.Size = Config.ClientSize;
             this.Location = Config.ClientPos;
 
+
+            comboBoxVisble.Items.AddRange(Enum.GetNames<Visibility>());
+            comboBoxVisble.SelectedItem = (string)Config.MastodonVisibility;
+
+            InitTimers();
+
+            ResetViewers();
+        }
+
+        private void InitTimers()
+        {
             ReloadTimer.Tick += ReloadTimer_Tick;
             ReloadTimer.Interval = 1000;
             ReloadTimer.Start();
@@ -57,8 +76,6 @@ namespace FRClient
 
             AnimeTimer.Tick += AnimeTimer_Tick;
             AnimeTimer.Interval = 10;
-
-            ResetViewers();
         }
 
 
@@ -188,8 +205,56 @@ namespace FRClient
         }
 
         #endregion
-        #region その他-------------------------------------
+        #region ポスト処理-------------------------------------
 
+
+        public void OnPost(FRWebView sender, string data)
+        {
+            try {
+                //連動中かどうか？
+                if (IsPostStop) {
+                    Log.Info($"PostStop...");
+                    return;
+                }
+
+                //画像はあるかな？
+                var images = new List<string>(Images.Count);
+                foreach (var image in Images) {
+                    images.Add(image.ToString());
+                }
+
+                //表示範囲はfinaly前に確保しておく。
+                var visi = Visibility;
+
+                //マストドンの処理は別スレで。
+                Task.Run(() =>
+                {
+                    RepostTweet(data, images, visi);
+                });
+
+            } finally {
+                Images.Clear();
+                comboBoxVisble.SelectedItem = (string)Config.MastodonVisibility;
+            }
+        }
+
+        private void RepostTweet(string data, List<string> images, Visibility visi)
+        {
+            if (Config.IsSendMastodon) {
+                var st = new Mastodon.Status();
+                st.ParseHanahudaFormat(data);
+                st.Images = images;
+                st.Visi = visi;
+                st.Log(Log);
+
+                var mastodon = Mastodon.Instance;
+                mastodon.Init();
+
+                mastodon.Post(st);
+            }
+        }
+        #endregion
+        #region その他-------------------------------------
 
         private void FRClientForm_Activated(object sender, EventArgs e)
         {
@@ -204,7 +269,9 @@ namespace FRClient
         {
             Log.Debug(this);
             ReloadTimer.Interval = Config.TwitterDeactiveReloadInterval * 1000;
-            ExpandTimer.Start();
+            if (Config.IsCloseDeactive) {
+                ExpandTimer.Start();
+            }
         }
 
         private void ExpandTimer_Tick(object sender, EventArgs e)
@@ -291,7 +358,6 @@ namespace FRClient
             this.Controls.Remove(sender);
             OldImageParent.ReaddViewer(sender);
         }
-
 
         #endregion
     }

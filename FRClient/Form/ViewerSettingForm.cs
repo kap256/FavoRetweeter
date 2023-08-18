@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FRClient.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,8 @@ namespace FRClient
     {
         const string CANCEL_TEXT = "キャンセル";
         public ViewerSetting.Viewer Setting { get; private set; }
+
+        SampleTextForm Sample = null;
 
         #region 初期化-----------------------------------------------
         public ViewerSettingForm(ViewerSetting.Viewer v)
@@ -33,11 +36,15 @@ namespace FRClient
             textBoxUrl.Text = Setting.URI;
             numericWidth.Value = Setting.Width;
             trackBarWidth.Value = Setting.Width;
-            textBoxCSS.Text = Setting.Style;
-            textBoxScript.Text = Setting.Script;
+
             checkBoxHalf.Checked = Setting.IsHalf;
             textBoxHalf.Text = Setting.HalfURI;
             textBoxHalf.Enabled = Setting.IsHalf;
+
+            textBoxProfile.Text = Setting.Profile;
+
+            textBoxCSS.Text = Setting.Style;
+            textBoxScript.Text = Setting.Script;
         }
         #endregion
 
@@ -68,6 +75,11 @@ namespace FRClient
         private void textBoxHalf_TextChanged(object sender, EventArgs e)
         {
             Setting.HalfURI = textBoxHalf.Text;
+        }
+
+        private void textBoxProfile_TextChanged(object sender, EventArgs e)
+        {
+            Setting.Profile = textBoxProfile.Text;
         }
 
         private void textBoxScript_TextChanged(object sender, EventArgs e)
@@ -111,6 +123,20 @@ namespace FRClient
             this.DialogResult = DialogResult.Abort;
             this.Close();
         }
+        private void ViewerSettingForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Sample.Close();
+        }
         #endregion
+
+        private void buttonSampleCSS_Click(object sender, EventArgs e)
+        {
+            if (Sample != null) {
+                Sample.Close();
+            }
+            Sample = new SampleTextForm(Resources.sample_css);
+            Sample.Show();
+        }
+
     }
 }

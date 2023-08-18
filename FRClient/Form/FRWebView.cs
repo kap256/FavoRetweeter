@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 using System.Diagnostics;
 using System.Text;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace FRClient
 {
@@ -40,8 +41,10 @@ namespace FRClient
 
         #endregion
 
+        private static CoreWebView2Environment Env;
+
         protected Logger Log = Logger.GetInstance();
-        WebViewBlockHandler Handler = null;
+        public WebViewBlockHandler Handler { protected get; set; }
 
         protected FRJSLoader FRJS = new();
         protected ReloadTweetLoader ReloadJS = new();
@@ -57,8 +60,16 @@ namespace FRClient
 
         bool IsImage = false;
 
-        public FRWebView(WebViewBlockHandler h=null)
+        static FRWebView()
         {
+            var task = CoreWebView2Environment.CreateAsync();
+            task.Wait();
+            Env = task.Result;
+        }
+        public FRWebView(WebViewBlockHandler h=null,string profile = "")
+            :base()
+        {
+
             ReloadJS.FocusInterval = Config.TwitterFocusInterval;
             Handler = h;
 
@@ -69,6 +80,20 @@ namespace FRClient
             SourceChanged += frWebView_SourceChanged;
             NavigationStarting += frWebView_NavigationStarting;
             NavigationCompleted += frWebView_NavigationCompleted;
+
+            var prop = new CoreWebView2CreationProperties();
+            prop.ProfileName = profile;
+            this.CreationProperties = prop;
+
+            /*
+            if (!DesignMode) {
+                //ソースの指定などをすると自動でEnsureされてしまうので、できる限り早く、早く。
+                //早すぎてデザイナーモードでも表示されてしまう、どうする、どうする。
+                var options = Env.CreateCoreWebView2ControllerOptions();
+                options.ProfileName = "not_default";
+                _ = this.EnsureCoreWebView2Async(Env, options);
+            }
+            */
         }
         public void InitByViewerSetting(string uri, ViewerSetting.Viewer setting)
         {
@@ -235,7 +260,7 @@ namespace FRClient
             data = data.Substring(2);
             switch (code) {
                 case "MS":
-                    PostToOther(data);
+                    Handler?.OnPost(this, data);
                     break;
                 case "LG":
                     Log.Info($"Browser < {data}");
@@ -247,48 +272,7 @@ namespace FRClient
             }
         }
 
-        private void PostToOther(string data)
-        {
-            try {
-                //連動中かどうか？
-                if (State.IsPostStop) {
-                    Log.Info($"PostStop...");
-                    return;
-                }
-
-                //画像はあるかな？
-                var images = new List<string>(State.Images.Count);
-                foreach (var image in State.Images) {
-                    images.Add(image.ToString());
-                }
-
-                //マストドンの処理は別スレで。
-                Task.Run(() =>
-                {
-                    RepostTweet(data, images);
-                });
-
-            } finally {
-                State.Images.Clear();
-            }
-        }
         #endregion
-
-        private void RepostTweet(string data, List<string> images)
-        {
-            if (Config.IsSendMastodon) {
-                var st = new Mastodon.Status();
-                st.ParseHanahudaFormat(data);
-                st.Images = images;
-                st.Visi = State.Visi;
-                st.Log(Log);
-
-                var mastodon = Mastodon.Instance;
-                mastodon.Init();
-
-                mastodon.Post(st);
-            }
-        }
 
     }
 }

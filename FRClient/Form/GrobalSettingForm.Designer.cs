@@ -48,6 +48,7 @@
             numericFocus = new NumericUpDown();
             numericZoom = new NumericUpDown();
             buttonExit = new Button();
+            checkBoxCloseDeactive = new CheckBox();
             groupBox1 = new GroupBox();
             label9 = new Label();
             label2 = new Label();
@@ -151,13 +152,14 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Controls.Add(checkBoxCloseDeactive);
             groupBox2.Controls.Add(groupBox3);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(numericZoom);
             groupBox2.Controls.Add(label3);
-            groupBox2.Location = new Point(12, 199);
+            groupBox2.Location = new Point(12, 161);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(589, 145);
+            groupBox2.Size = new Size(589, 183);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "表示";
@@ -171,7 +173,7 @@
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(numericFocus);
             groupBox3.Controls.Add(label6);
-            groupBox3.Location = new Point(6, 51);
+            groupBox3.Location = new Point(6, 86);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(577, 88);
             groupBox3.TabIndex = 6;
@@ -229,7 +231,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(183, 24);
+            label4.Location = new Point(189, 60);
             label4.Name = "label4";
             label4.Size = new Size(17, 15);
             label4.TabIndex = 4;
@@ -237,7 +239,7 @@
             // 
             // numericZoom
             // 
-            numericZoom.Location = new Point(100, 22);
+            numericZoom.Location = new Point(106, 58);
             numericZoom.Name = "numericZoom";
             numericZoom.Size = new Size(77, 23);
             numericZoom.TabIndex = 3;
@@ -245,7 +247,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(13, 24);
+            label3.Location = new Point(19, 60);
             label3.Name = "label3";
             label3.Size = new Size(81, 15);
             label3.TabIndex = 2;
@@ -273,7 +275,17 @@
             buttonExit.Text = "完了";
             buttonExit.UseVisualStyleBackColor = true;
             // 
-            // GrobalSetting
+            // checkBoxCloseDeactive
+            // 
+            checkBoxCloseDeactive.AutoSize = true;
+            checkBoxCloseDeactive.Location = new Point(19, 22);
+            checkBoxCloseDeactive.Name = "checkBoxCloseDeactive";
+            checkBoxCloseDeactive.Size = new Size(164, 19);
+            checkBoxCloseDeactive.TabIndex = 7;
+            checkBoxCloseDeactive.Text = "放置したときにポスト部を畳む";
+            checkBoxCloseDeactive.UseVisualStyleBackColor = true;
+            // 
+            // GrobalSettingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -285,7 +297,7 @@
             Controls.Add(groupBox1);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "GrobalSetting";
+            Name = "GrobalSettingForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "全体設定";
@@ -314,5 +326,6 @@
         private NumericUpDown numericDeactiveReload;
         private NumericUpDown numericActiveReload;
         private ComboBox comboBoxMSVisible;
+        private CheckBox checkBoxCloseDeactive;
     }
 }
