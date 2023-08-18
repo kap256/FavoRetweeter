@@ -29,9 +29,12 @@
         {
             Label label1;
             Panel panel1;
+            Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties coreWebView2CreationProperties1 = new Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties();
             Panel panel2;
+            Label label2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRClientForm));
             webViewPost = new FRPostWebView();
+            comboBoxVisble = new ComboBox();
             buttonExpand = new Button();
             buttonAdd = new Button();
             checkPostStop = new CheckBox();
@@ -42,6 +45,7 @@
             label1 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
+            label2 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webViewPost).BeginInit();
             panel2.SuspendLayout();
@@ -73,11 +77,19 @@
             // 
             webViewPost.AllowExternalDrop = true;
             webViewPost.BackColor = SystemColors.Control;
+            coreWebView2CreationProperties1.AdditionalBrowserArguments = null;
+            coreWebView2CreationProperties1.BrowserExecutableFolder = null;
+            coreWebView2CreationProperties1.IsInPrivateModeEnabled = null;
+            coreWebView2CreationProperties1.Language = null;
+            coreWebView2CreationProperties1.ProfileName = "";
+            coreWebView2CreationProperties1.UserDataFolder = null;
+            webViewPost.CreationProperties = coreWebView2CreationProperties1;
             webViewPost.DefaultBackgroundColor = Color.Empty;
             webViewPost.Dock = DockStyle.Fill;
             webViewPost.ImeMode = ImeMode.NoControl;
             webViewPost.Location = new Point(0, 0);
             webViewPost.Name = "webViewPost";
+            webViewPost.PostUri = null;
             webViewPost.Size = new Size(418, 420);
             webViewPost.Source = new Uri("https://twitter.com/compose/tweet", UriKind.Absolute);
             webViewPost.TabIndex = 3;
@@ -85,6 +97,8 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(comboBoxVisble);
             panel2.Controls.Add(buttonExpand);
             panel2.Controls.Add(panel1);
             panel2.Controls.Add(buttonAdd);
@@ -97,6 +111,26 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(444, 595);
             panel2.TabIndex = 6;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new Point(9, 489);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 8;
+            label2.Text = "公開範囲";
+            // 
+            // comboBoxVisble
+            // 
+            comboBoxVisble.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            comboBoxVisble.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxVisble.FormattingEnabled = true;
+            comboBoxVisble.Location = new Point(70, 486);
+            comboBoxVisble.Name = "comboBoxVisble";
+            comboBoxVisble.Size = new Size(105, 23);
+            comboBoxVisble.TabIndex = 7;
             // 
             // buttonExpand
             // 
@@ -236,5 +270,6 @@
         private Button buttonAdd;
         private TableLayoutPanel tableLayoutPanel;
         private Button buttonExpand;
+        private ComboBox comboBoxVisble;
     }
 }

@@ -15,6 +15,8 @@ namespace FRClient
 {
     public interface WebViewBlockHandler
     {
+        void OnPost(FRWebView sender, string data);
+
         void OnDelete(WebViewBlock sender);
         void OnMove(WebViewBlock sender, int dir);
 

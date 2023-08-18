@@ -44,7 +44,7 @@ namespace FRClient
         private static CoreWebView2Environment Env;
 
         protected Logger Log = Logger.GetInstance();
-        WebViewBlockHandler Handler = null;
+        public WebViewBlockHandler Handler { protected get; set; }
 
         protected FRJSLoader FRJS = new();
         protected ReloadTweetLoader ReloadJS = new();
@@ -260,7 +260,7 @@ namespace FRClient
             data = data.Substring(2);
             switch (code) {
                 case "MS":
-                    PostToOther(data);
+                    Handler?.OnPost(this, data);
                     break;
                 case "LG":
                     Log.Info($"Browser < {data}");
@@ -272,48 +272,7 @@ namespace FRClient
             }
         }
 
-        private void PostToOther(string data)
-        {
-            try {
-                //連動中かどうか？
-                if (State.IsPostStop) {
-                    Log.Info($"PostStop...");
-                    return;
-                }
-
-                //画像はあるかな？
-                var images = new List<string>(State.Images.Count);
-                foreach (var image in State.Images) {
-                    images.Add(image.ToString());
-                }
-
-                //マストドンの処理は別スレで。
-                Task.Run(() =>
-                {
-                    RepostTweet(data, images);
-                });
-
-            } finally {
-                State.Images.Clear();
-            }
-        }
         #endregion
-
-        private void RepostTweet(string data, List<string> images)
-        {
-            if (Config.IsSendMastodon) {
-                var st = new Mastodon.Status();
-                st.ParseHanahudaFormat(data);
-                st.Images = images;
-                st.Visi = State.Visi;
-                st.Log(Log);
-
-                var mastodon = Mastodon.Instance;
-                mastodon.Init();
-
-                mastodon.Post(st);
-            }
-        }
 
     }
 }

@@ -38,6 +38,7 @@
             Label label5;
             FlowLayoutPanel flowLayoutPanel1;
             textBoxCSS = new TextBox();
+            buttonSampleCSS = new Button();
             textBoxScript = new TextBox();
             textBoxProfile = new TextBox();
             checkBoxHalf = new CheckBox();
@@ -125,6 +126,7 @@
             // 
             panel3.Controls.Add(textBoxCSS);
             panel3.Controls.Add(label4);
+            panel3.Controls.Add(buttonSampleCSS);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(3, 283);
             panel3.Name = "panel3";
@@ -145,6 +147,18 @@
             textBoxCSS.TabIndex = 7;
             textBoxCSS.WordWrap = false;
             textBoxCSS.TextChanged += textBoxCSS_TextChanged;
+            // 
+            // buttonSampleCSS
+            // 
+            buttonSampleCSS.Font = new Font("Yu Gothic UI", 6F, FontStyle.Regular, GraphicsUnit.Point);
+            buttonSampleCSS.Location = new Point(540, 0);
+            buttonSampleCSS.Margin = new Padding(1);
+            buttonSampleCSS.Name = "buttonSampleCSS";
+            buttonSampleCSS.Size = new Size(75, 18);
+            buttonSampleCSS.TabIndex = 3;
+            buttonSampleCSS.Text = "サンプル";
+            buttonSampleCSS.UseVisualStyleBackColor = true;
+            buttonSampleCSS.Click += buttonSampleCSS_Click;
             // 
             // panel2
             // 
@@ -305,8 +319,10 @@
             MinimizeBox = false;
             MinimumSize = new Size(640, 480);
             Name = "ViewerSettingForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "カラムの設定";
+            FormClosed += ViewerSettingForm_FormClosed;
             tableLayoutPanel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
@@ -332,5 +348,6 @@
         private CheckBox checkBoxHalf;
         private TextBox textBoxHalf;
         private TextBox textBoxProfile;
+        private Button buttonSampleCSS;
     }
 }
