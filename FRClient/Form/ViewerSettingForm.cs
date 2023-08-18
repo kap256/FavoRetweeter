@@ -125,7 +125,9 @@ namespace FRClient
         }
         private void ViewerSettingForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Sample.Close();
+            if (Sample != null) {
+                Sample.Close();
+            }
         }
         #endregion
 
