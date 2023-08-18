@@ -33,11 +33,15 @@ namespace FRClient
             textBoxUrl.Text = Setting.URI;
             numericWidth.Value = Setting.Width;
             trackBarWidth.Value = Setting.Width;
-            textBoxCSS.Text = Setting.Style;
-            textBoxScript.Text = Setting.Script;
+
             checkBoxHalf.Checked = Setting.IsHalf;
             textBoxHalf.Text = Setting.HalfURI;
             textBoxHalf.Enabled = Setting.IsHalf;
+
+            textBoxProfile.Text = Setting.Profile;
+
+            textBoxCSS.Text = Setting.Style;
+            textBoxScript.Text = Setting.Script;
         }
         #endregion
 
@@ -68,6 +72,11 @@ namespace FRClient
         private void textBoxHalf_TextChanged(object sender, EventArgs e)
         {
             Setting.HalfURI = textBoxHalf.Text;
+        }
+
+        private void textBoxProfile_TextChanged(object sender, EventArgs e)
+        {
+            Setting.Profile = textBoxProfile.Text;
         }
 
         private void textBoxScript_TextChanged(object sender, EventArgs e)

@@ -204,7 +204,9 @@ namespace FRClient
         {
             Log.Debug(this);
             ReloadTimer.Interval = Config.TwitterDeactiveReloadInterval * 1000;
-            ExpandTimer.Start();
+            if (Config.IsCloseDeactive) {
+                ExpandTimer.Start();
+            }
         }
 
         private void ExpandTimer_Tick(object sender, EventArgs e)

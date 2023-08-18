@@ -73,7 +73,6 @@
             // 
             webViewPost.AllowExternalDrop = true;
             webViewPost.BackColor = SystemColors.Control;
-            webViewPost.CreationProperties = null;
             webViewPost.DefaultBackgroundColor = Color.Empty;
             webViewPost.Dock = DockStyle.Fill;
             webViewPost.ImeMode = ImeMode.NoControl;

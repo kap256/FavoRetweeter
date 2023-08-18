@@ -136,7 +136,6 @@ const remove_loading = setInterval(() => {
 
 }, 10);
 
-
 window.addEventListener('error', (event) => {
     mylog(`ERR -> ${event.type}: ${event.message}`);
 });

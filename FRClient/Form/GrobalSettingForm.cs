@@ -17,6 +17,7 @@ namespace FRClient
         : Form
     {
 
+        CheckboxConfig IsCloseDeactive;
         CheckboxConfig IsSendMastodon;
         TextboxConfig MastodonInstance;
         TextboxConfig MastodonAccessToken;
@@ -31,6 +32,7 @@ namespace FRClient
         {
             InitializeComponent();
 
+            IsCloseDeactive = new(Config.IsCloseDeactive, checkBoxCloseDeactive);
             IsSendMastodon = new(Config.IsSendMastodon, checkBoxSendMastodon);
             MastodonInstance = new(Config.MastodonInstance, textBoxMSInstance);
             MastodonAccessToken = new(Config.MastodonAccessToken, textBoxMSToken);

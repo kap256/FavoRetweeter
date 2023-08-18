@@ -80,7 +80,7 @@ namespace FRClient
         }
         private FRWebView CreateWebView(string uri, ViewerSetting.Viewer setting)
         {
-            var ret = new FRWebView(Handler);
+            var ret = new FRWebView(Handler,setting.Profile);
             ((ISupportInitialize)ret).BeginInit();
 
             ret.AllowExternalDrop = true;

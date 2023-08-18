@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.Core;
 using Microsoft.Web.WebView2.WinForms;
 using System.Diagnostics;
 using System.Text;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace FRClient
 {
@@ -40,6 +41,8 @@ namespace FRClient
 
         #endregion
 
+        private static CoreWebView2Environment Env;
+
         protected Logger Log = Logger.GetInstance();
         WebViewBlockHandler Handler = null;
 
@@ -57,8 +60,16 @@ namespace FRClient
 
         bool IsImage = false;
 
-        public FRWebView(WebViewBlockHandler h=null)
+        static FRWebView()
         {
+            var task = CoreWebView2Environment.CreateAsync();
+            task.Wait();
+            Env = task.Result;
+        }
+        public FRWebView(WebViewBlockHandler h=null,string profile = "")
+            :base()
+        {
+
             ReloadJS.FocusInterval = Config.TwitterFocusInterval;
             Handler = h;
 
@@ -69,6 +80,20 @@ namespace FRClient
             SourceChanged += frWebView_SourceChanged;
             NavigationStarting += frWebView_NavigationStarting;
             NavigationCompleted += frWebView_NavigationCompleted;
+
+            var prop = new CoreWebView2CreationProperties();
+            prop.ProfileName = profile;
+            this.CreationProperties = prop;
+
+            /*
+            if (!DesignMode) {
+                //ソースの指定などをすると自動でEnsureされてしまうので、できる限り早く、早く。
+                //早すぎてデザイナーモードでも表示されてしまう、どうする、どうする。
+                var options = Env.CreateCoreWebView2ControllerOptions();
+                options.ProfileName = "not_default";
+                _ = this.EnsureCoreWebView2Async(Env, options);
+            }
+            */
         }
         public void InitByViewerSetting(string uri, ViewerSetting.Viewer setting)
         {
