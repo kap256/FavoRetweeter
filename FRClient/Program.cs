@@ -1,3 +1,4 @@
+using FavoRetweeter;
 using KAPLibNet;
 
 // TODO:IME! IME!
@@ -19,6 +20,7 @@ namespace FRClient
 
             try {
                 ApplicationConfiguration.Initialize();
+
                 Application.Run(new FRClientForm());
             } catch (Exception ex) {
                 MessageBox.Show(

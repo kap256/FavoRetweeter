@@ -269,3 +269,4 @@ __pycache__/
 /firefox/web-ext-artifacts
 *.html
 /履歴
+/publish_private

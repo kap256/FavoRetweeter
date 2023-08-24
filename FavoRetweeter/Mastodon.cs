@@ -4,7 +4,7 @@ using KAPLibNet;
 
 namespace FavoRetweeter
 {
-    public class Mastodon : ISingletonLike<Mastodon>
+    public partial class Mastodon : ISingletonLike<Mastodon>
     {
 
         public static Mastodon Instance => ISingletonLike< Mastodon > .Instance;
@@ -12,35 +12,6 @@ namespace FavoRetweeter
         MastodonClient Client;
         Visibility Visi;
         Logger Log;
-
-        public class Status
-        {
-            public string Text = "";
-            public string RTText = "";
-            public string RTURL = "";
-            public List<string> Images = null;
-            public Visibility? Visi=null;
-
-            public void ParseHanahudaFormat(string data)
-            {
-
-
-                var message = data.Trim('\"').Split("🎴");
-                try {
-                    Text = message[0];
-                    RTText = message[1];
-                    RTURL = message[2];
-                } catch {
-                    //無視する
-                }
-            }
-            public void Log(Logger l)
-            {
-                l.Debug($"  text - {Text}");
-                l.Debug($"  rt - {RTText}");
-                l.Debug($"  rturl - {RTURL}");
-            }
-        }
 
         public Mastodon()
         {
@@ -50,13 +21,13 @@ namespace FavoRetweeter
         {
             Log = log;
         }
-        public void Init()
+        public async Task Init()
         {
-            Init(Config.MastodonInstance,
+            await Init(Config.MastodonInstance,
                  Config.MastodonAccessToken,
-                 Config.MastodonVisibility);
+                 Config.MastodonVisibility.Get().Mastodon?? Visibility.Private);
         }
-        public void Init(string instance, string token, Visibility visi)
+        public async Task Init(string instance, string token, Visibility visi)
         {
             try {
                 Visi = visi;
@@ -66,9 +37,7 @@ namespace FavoRetweeter
                     instance,
                     token);
 #if DEBUG
-                var task = Client.GetCurrentUser();
-                task.Wait();
-                var account = task.Result;
+                var account =await Client.GetCurrentUser();
                 Log.Debug($"account - {account.DisplayName}");
 #endif
             } catch (Exception ex) {
@@ -104,24 +73,13 @@ namespace FavoRetweeter
                 }
             }
 
-            var text = st.Text;
-
-            //RTが含まれる場合
-            if (!String.IsNullOrEmpty(st.RTText)) {
-                var rt_text = st.RTText.TrimEnd('…');
-                text += $"{Environment.NewLine}{Environment.NewLine}RT:";
-                text += $"{Environment.NewLine}{rt_text}";
-                text += $"{Environment.NewLine}[{st.RTURL}]";
-            }
-
-            //整形
-            text = text.Replace("\\n", Environment.NewLine).Replace("\\\\", "￥").Replace("\\", "");
+            var text = st.FormatedText;
 
             //投稿
             try {
                 var t_pub = Client.PublishStatus(
                     text,
-                    st.Visi ?? Visi,
+                    st.Visi?.Mastodon ?? Visi,
                     null,
                     mids);
                 t_pub.Wait();

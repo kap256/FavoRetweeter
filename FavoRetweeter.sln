@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KAPLibNet", "..\KAPLibNet\K
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FRClient", "FRClient\FRClient.csproj", "{F63F2F16-8BCA-46EA-A052-3E9A8E53F993}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misq", "..\Misq\Misq\Misq.csproj", "{46B5BB9A-290C-48EA-A0EB-E192CF33C99F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{F63F2F16-8BCA-46EA-A052-3E9A8E53F993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F63F2F16-8BCA-46EA-A052-3E9A8E53F993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F63F2F16-8BCA-46EA-A052-3E9A8E53F993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46B5BB9A-290C-48EA-A0EB-E192CF33C99F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B5BB9A-290C-48EA-A0EB-E192CF33C99F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B5BB9A-290C-48EA-A0EB-E192CF33C99F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B5BB9A-290C-48EA-A0EB-E192CF33C99F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
