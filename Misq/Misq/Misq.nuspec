@@ -14,7 +14,7 @@
 		<copyright>Copyright (c) syuilo 2019</copyright>
 		<tags>Misskey</tags>
 		<dependencies>
-			<dependency id="Newtonsoft.Json" version="11.0.2" />
+			<dependency id="Newtonsoft.Json" version="13.0.1" />
 		</dependencies>
 	</metadata>
 </package>
