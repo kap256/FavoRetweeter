@@ -11,10 +11,14 @@ namespace FavoRetweeter
         static void Main(string[] args)
         {
             var pg = new Program();
+
             pg.Work(args);
         }
         void Work(string[] args)
         {
+
+            //Log.Lv = ILogger.Level.TRACE;
+
             Log.Info($"--- {DateTime.Now} @ {Environment.CurrentDirectory}---");
             Log.Info($"start{StrsToStr(args)}");
 

@@ -211,6 +211,10 @@ namespace FRClient
         public void OnPost(FRWebView sender, string data)
         {
             try {
+                if (string.IsNullOrEmpty(data)) {
+                    return;
+                }
+
                 //òAìÆíÜÇ©Ç«Ç§Ç©ÅH
                 if (IsPostStop) {
                     Log.Info($"PostStop...");
