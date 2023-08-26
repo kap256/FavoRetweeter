@@ -7,11 +7,11 @@ namespace KAPLibNet
     public abstract class ILogger
     {
         #region 実装済-------------------------------------------
-        Level Lv;
+        public Level Lv;
 
-        private enum Level
+        public enum Level
         {
-            INFO=0,
+            INFO = 0,
             DEBUG = 1,
             TRACE = 2,
         }
@@ -45,13 +45,13 @@ namespace KAPLibNet
         {
             if ((int)lv > (int)(Lv)) return;
 
-            StackTrace stack= new(false);
+            StackTrace stack = new(false);
             var method_name = "unknown()";
             for (int i = 1; i < stack.FrameCount; i++) {
                 var method = stack.GetFrame(i)?.GetMethod();
                 if (method == null) break;
-                if (IsILogger(method.DeclaringType))  continue;
-                method_name = method.Name+"()";
+                if (IsILogger(method.DeclaringType)) continue;
+                method_name = method.Name + "()";
                 break;
             }
             Log(method_name);
@@ -104,6 +104,7 @@ namespace KAPLibNet
 
     public class Logger : ILogger
     {
+        const int MAX_FILE_SIZE = 1 * 1024 * 1024;
         string Path;
         public static string DefaultPath
             = System.IO.Path.GetFileNameWithoutExtension(Application.ExecutablePath) + ".log";
@@ -126,19 +127,33 @@ namespace KAPLibNet
             return ret;
         }
 
-        private Logger(string path) {
+        private Logger(string path)
+        {
             Path = path;
         }
-        private Logger():this("log.log"){ }
+        private Logger() : this("log.log") { }
 
         protected override void Log(string mes)
         {
             System.Diagnostics.Debug.WriteLine(mes);
             try {
+                try {
+                    var info = new FileInfo(Path);
+                    if (info.Exists && info.Length > MAX_FILE_SIZE) {
+                        System.Diagnostics.Debug.WriteLine("log rotate.");
+                        var old_info = new FileInfo($"{Path}_old.log");
+                        old_info.Delete();
+                        info.MoveTo(old_info.FullName);
+                    }
+                } catch (Exception ex){
+                    System.Diagnostics.Debug.WriteLine($"ファイルローテート例外：{ex.Message}");
+                    //もみ消す
+                }
                 using (var writer = new StreamWriter(Path, true)) {
                     writer.WriteLine($"{DateTime.Now.ToString("HH:mm:ss")} - {mes}");
                 }
-            } catch {
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine($"ログ書き込み例外：{ex.Message}");
                 //もみ消す
             }
         }

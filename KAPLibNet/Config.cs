@@ -18,6 +18,7 @@ namespace KAPLibNet
             public void Set(T value);
             public T Get();
         }
+
         public class ConfStr : IConfValue<string>
         {
             protected IConfig Conf;
@@ -51,6 +52,7 @@ namespace KAPLibNet
             public virtual void Dispose() { }
 
         }
+
         public class ConfInt : ConfStr, IConfValue<int>
         {
             public int Min;
@@ -85,6 +87,7 @@ namespace KAPLibNet
             public new int Get()
                 => (int)this;
         }
+
         public class ConfBool : ConfStr, IConfValue<bool>
         {
             const string TRUE = "1";
@@ -104,21 +107,23 @@ namespace KAPLibNet
             private static string GetStr(bool b)
                 => (b ? TRUE : FALSE);
         }
-        public class ConfEnum<E> : ConfStr, IConfValue<E> where E : struct, Enum
+
+        public abstract class ConfEnumlike<E> : ConfStr, IConfValue<E>
         {
-            E EnumDefault;
-            public ConfEnum() { }
-            public ConfEnum(IConfig conf, string key, E def)
+            protected E EnumDefault;
+            public ConfEnumlike() { }
+            public ConfEnumlike(IConfig conf, string key, E def)
                 : base(conf, key, def.ToString())
             {
                 EnumDefault = def;
             }
 
-            public static implicit operator E(ConfEnum<E> c)
+            public static implicit operator E(ConfEnumlike<E> c)
             {
                 string value = c.Conf.GetConfig(c.Key, c.Default);
                 E ret;
-                if (!Enum.TryParse<E>(value, out ret)) {
+
+                if (!c.TryParse(value, out ret)) {
                     return c.EnumDefault;
                 }
                 return ret;
@@ -127,6 +132,53 @@ namespace KAPLibNet
                 => Conf.SetConfig(Key, value.ToString());
             public new E Get()
                 => (E)this;
+
+            protected abstract bool TryParse(string value, out E result);
+
+            public abstract E[] Values();
+            public string[] Names()
+            {
+                var v = Values();
+                var ret = new string[v.Length];
+                for (int i = 0; i < v.Length; i++) {
+                    ret[i] = v[i].ToString();
+                }
+                return ret;
+            }
+        }
+
+        public class ConfEnum<E> : ConfEnumlike<E>, IConfValue<E> where E : struct, Enum
+        {
+            public ConfEnum() { }
+            public ConfEnum(IConfig conf, string key, E def)
+                : base(conf, key, def) { }
+
+            protected override bool TryParse(string value, out E result)
+            {
+                return Enum.TryParse<E>(value, out result);
+            }
+
+            public override E[] Values()
+            {
+                return Enum.GetValues<E>();
+            }
+        }
+
+        public class ConfEnumObject<E> : ConfEnumlike<E>, IConfValue<E> where E : IEnumlikeObject<E>
+        {
+            public ConfEnumObject() { }
+            public ConfEnumObject(IConfig conf, string key, E def)
+                : base(conf, key, def) { }
+
+            protected override bool TryParse(string value, out E result)
+            {
+                //EnumDefaultはその辺にあった都合のいいインスタンス
+                return EnumDefault.TryParse(value, out result);
+            }
+            public override E[] Values()
+            {
+                return EnumDefault.GetValues();
+            }
         }
 
         public class ConfPoint : IConfValue<Point>
@@ -247,7 +299,7 @@ namespace KAPLibNet
                 var ret = new T();
                 var fields = typeof(T).GetFields();
                 foreach (var f in fields) {
-                    string strval=null;
+                    string strval = null;
                     try {
                         if (c.Dic.TryGetValue(f.Name, out strval)) {
                             object val;
@@ -365,39 +417,53 @@ namespace KAPLibNet
 
         protected void SetConfig(string key, string value)
         {
-            var current = config.AppSettings.Settings[key];
-            if (current != null) {
-                current.Value = value;
-            } else {
-                config.AppSettings.Settings.Add(key, value);
-            }
-            config.Save();
+            SaveConfig(() =>
+            {
+                var current = config.AppSettings.Settings[key];
+                if (current != null) {
+                    current.Value = value;
+                } else {
+                    config.AppSettings.Settings.Add(key, value);
+                }
+            });
         }
         protected void RemoveConfig(string key)
         {
-            config.AppSettings.Settings.Remove(key);
-            //指定したキーを持つ要素が含まれていない場合、 NameValueCollection は変更されません。 
-            config.Save();
+            SaveConfig(() =>
+            {
+                config.AppSettings.Settings.Remove(key);
+                //指定したキーを持つ要素が含まれていない場合、 NameValueCollection は変更されません。 
+            });
         }
-    }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    public abstract class ConfigBase : IConfig
-    {
-        private Configuration _config;
-        Configuration IConfig.config => _config;
-
-
-        public ConfigBase()
+        private void SaveConfig(Action update_method)
         {
-            _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            try {
+                update_method();
+                config.Save();
+            } catch (ConfigurationErrorsException ex) {
+                //セーブ失敗。ログにだけ残しとこ。
+                Logger.GetInstance().Info(ex);
+            }
         }
-        public ConfigBase(string path)
-        {
-            var exeFileMap = new ExeConfigurationFileMap { ExeConfigFilename = path };
-            _config = ConfigurationManager.OpenMappedExeConfiguration(
-                exeFileMap, ConfigurationUserLevel.None);
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        public abstract class ConfigBase : IConfig
+        {
+            private Configuration _config;
+            Configuration IConfig.config => _config;
+
+
+            public ConfigBase()
+            {
+                _config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            }
+            public ConfigBase(string path)
+            {
+                var exeFileMap = new ExeConfigurationFileMap { ExeConfigFilename = path };
+                _config = ConfigurationManager.OpenMappedExeConfiguration(
+                    exeFileMap, ConfigurationUserLevel.None);
+
+            }
         }
     }
 }

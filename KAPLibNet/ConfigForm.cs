@@ -61,15 +61,15 @@ namespace KAPLibNet.ConfigForm
             Conf.Set((int)Box.Value);
         }
     }
-    public class ComboboxConfig<E>where E : struct, Enum
+    public class ComboboxConfig<E>
     {
-        ConfEnum<E> Conf;
+        ConfEnumlike<E> Conf;
         ComboBox Box;
-        public ComboboxConfig(ConfEnum<E> conf, ComboBox box)
+        public ComboboxConfig(ConfEnumlike<E> conf, ComboBox box)
         {
             Conf = conf;
             Box = box;
-            Box.Items.AddRange(Enum.GetNames(typeof(E)));
+            Box.Items.AddRange(conf.Names());
             Box.SelectedItem = (string)conf;
             Box.SelectedIndexChanged += Box_SelectedIndexChanged;
         }
