@@ -265,6 +265,10 @@ namespace FRClient
                 case "LG":
                     Log.Info($"Browser < {data}");
                     break;
+                case "SK":
+                    Log.Info($"skip:{data}");
+                    Handler?.OnPost(this, null);
+                    break;
                 default:
                     Log.Info($"Unkwon Message!  - {code}:{data}");
                     break;

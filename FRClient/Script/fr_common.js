@@ -6,8 +6,8 @@ var LAST_RT_HREF = "";
 function send_common() {
 
     //返信のような気がする……
-    if (document.querySelectorAll("article").length > 0) {
-        mylog("maybe reply");
+    if (window.innerWidth <600 && document.querySelectorAll("article").length > 0) {
+        send_fr_skip("maybe reply");
         return;
     }
 
@@ -16,12 +16,12 @@ function send_common() {
     let editor = document.getElementsByClassName("DraftEditor-root");
 
     if (editor.length <= 0) {
-        mylog("editor not found.");
+        send_fr_skip("editor not found.");
         return;
     }
     text += editor[0].innerText;
     if (text.includes("いまどうしてる？")) {
-        mylog("maybe no text");
+        send_fr_skip("maybe no text");
         return;
     }
 
@@ -136,7 +136,11 @@ const remove_loading = setInterval(() => {
 
 }, 10);
 
-
+let old_error = "";
 window.addEventListener('error', (event) => {
-    mylog(`ERR -> ${event.type}: ${event.message}`);
+    //同じエラーが頻出したので、抑止します。
+    if (old_error != event.message) {
+        mylog(`ERR -> ${event.type}: ${event.message}`);
+        old_error = event.message;
+    }
 });

@@ -11,14 +11,20 @@ namespace FavoRetweeter
         static void Main(string[] args)
         {
             var pg = new Program();
-            pg.Work(args);
+
+            var work = pg.Work(args);
+            work.Wait();
         }
-        void Work(string[] args)
+        async Task Work(string[] args)
         {
+
+            //Log.Lv = ILogger.Level.TRACE;
+
             Log.Info($"--- {DateTime.Now} @ {Environment.CurrentDirectory}---");
             Log.Info($"start{StrsToStr(args)}");
 
             Console.InputEncoding = Encoding.UTF8;
+
 
             using (var stdin = new BinaryReader(Console.OpenStandardInput())) {
 
@@ -31,14 +37,20 @@ namespace FavoRetweeter
                 var data = Encoding.UTF8.GetString(data_byte);
                 Log.Debug($"data - {data}");
 
-                var st = new Mastodon.Status();
+                var st = new Status();
                 st.ParseHanahudaFormat(data);
                 st.Log(Log);
 
-                var mastodon = new Mastodon(Log);
-                mastodon.Init();
-
-                mastodon.Post(st);
+                if (Config.IsSendMastodon) {
+                    var mastodon = Mastodon.Instance;
+                    await mastodon.Init();
+                    mastodon.Post(st);
+                }
+                if (Config.IsSendMisskey) {
+                    var misskey = Misskey.Instance;
+                    await misskey.Init();
+                    misskey.Post(st);
+                }
             }
         }
         string StrsToStr(string[] strs)

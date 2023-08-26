@@ -31,9 +31,11 @@
             Panel panel1;
             Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties coreWebView2CreationProperties1 = new Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties();
             Panel panel2;
+            Label label3;
             Label label2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRClientForm));
             webViewPost = new FRPostWebView();
+            textBox1 = new TextBox();
             comboBoxVisble = new ComboBox();
             buttonExpand = new Button();
             buttonAdd = new Button();
@@ -45,6 +47,7 @@
             label1 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
+            label3 = new Label();
             label2 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webViewPost).BeginInit();
@@ -56,7 +59,7 @@
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new Point(191, 430);
+            label1.Location = new Point(191, 295);
             label1.Name = "label1";
             label1.Size = new Size(166, 15);
             label1.TabIndex = 3;
@@ -68,9 +71,10 @@
             panel1.BackColor = SystemColors.Control;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(webViewPost);
-            panel1.Location = new Point(3, 3);
+            panel1.Location = new Point(3, 0);
+            panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(420, 422);
+            panel1.Size = new Size(420, 289);
             panel1.TabIndex = 5;
             // 
             // webViewPost
@@ -90,13 +94,15 @@
             webViewPost.Location = new Point(0, 0);
             webViewPost.Name = "webViewPost";
             webViewPost.PostUri = null;
-            webViewPost.Size = new Size(418, 420);
+            webViewPost.Size = new Size(418, 287);
             webViewPost.Source = new Uri("https://twitter.com/compose/tweet", UriKind.Absolute);
             webViewPost.TabIndex = 3;
             webViewPost.ZoomFactor = 1D;
             // 
             // panel2
             // 
+            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(label3);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(comboBoxVisble);
             panel2.Controls.Add(buttonExpand);
@@ -112,11 +118,32 @@
             panel2.Size = new Size(444, 595);
             panel2.TabIndex = 6;
             // 
+            // textBox1
+            // 
+            textBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            textBox1.Location = new Point(4, 416);
+            textBox1.MaxLength = 0;
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ScrollBars = ScrollBars.Vertical;
+            textBox1.Size = new Size(418, 137);
+            textBox1.TabIndex = 10;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Location = new Point(9, 398);
+            label3.Name = "label3";
+            label3.Size = new Size(212, 15);
+            label3.TabIndex = 9;
+            label3.Text = "作業用スペース（ご自由にご利用ください）";
+            // 
             // label2
             // 
             label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new Point(9, 489);
+            label2.Location = new Point(9, 354);
             label2.Name = "label2";
             label2.Size = new Size(55, 15);
             label2.TabIndex = 8;
@@ -127,7 +154,7 @@
             comboBoxVisble.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             comboBoxVisble.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxVisble.FormattingEnabled = true;
-            comboBoxVisble.Location = new Point(70, 486);
+            comboBoxVisble.Location = new Point(70, 351);
             comboBoxVisble.Name = "comboBoxVisble";
             comboBoxVisble.Size = new Size(105, 23);
             comboBoxVisble.TabIndex = 7;
@@ -175,7 +202,7 @@
             checkPostStop.FlatStyle = FlatStyle.Flat;
             checkPostStop.Font = new Font("Yu Gothic UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             checkPostStop.ImageAlign = ContentAlignment.MiddleRight;
-            checkPostStop.Location = new Point(4, 448);
+            checkPostStop.Location = new Point(4, 313);
             checkPostStop.Name = "checkPostStop";
             checkPostStop.Size = new Size(171, 32);
             checkPostStop.TabIndex = 0;
@@ -202,9 +229,9 @@
             listImages.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             listImages.FormattingEnabled = true;
             listImages.ItemHeight = 15;
-            listImages.Location = new Point(191, 448);
+            listImages.Location = new Point(191, 313);
             listImages.Name = "listImages";
-            listImages.Size = new Size(233, 79);
+            listImages.Size = new Size(231, 79);
             listImages.TabIndex = 1;
             listImages.TabStop = false;
             listImages.DoubleClick += listImages_DoubleClick;
@@ -271,5 +298,6 @@
         private TableLayoutPanel tableLayoutPanel;
         private Button buttonExpand;
         private ComboBox comboBoxVisble;
+        private TextBox textBox1;
     }
 }

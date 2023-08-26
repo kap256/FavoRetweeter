@@ -39,16 +39,24 @@
             Label label4;
             Label label3;
             Label label8;
+            GroupBox groupBox4;
+            Label label10;
+            Label label11;
+            Label label12;
             comboBoxMSVisible = new ComboBox();
             textBoxMSToken = new TextBox();
             textBoxMSInstance = new TextBox();
             checkBoxSendMastodon = new CheckBox();
+            checkBoxCloseDeactive = new CheckBox();
             numericDeactiveReload = new NumericUpDown();
             numericActiveReload = new NumericUpDown();
             numericFocus = new NumericUpDown();
             numericZoom = new NumericUpDown();
+            comboBoxMKVisible = new ComboBox();
+            textBoxMKToken = new TextBox();
+            textBoxMKInstance = new TextBox();
+            checkBoxSendMisskey = new CheckBox();
             buttonExit = new Button();
-            checkBoxCloseDeactive = new CheckBox();
             groupBox1 = new GroupBox();
             label9 = new Label();
             label2 = new Label();
@@ -61,6 +69,10 @@
             label4 = new Label();
             label3 = new Label();
             label8 = new Label();
+            groupBox4 = new GroupBox();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -68,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)numericActiveReload).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericFocus).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericZoom).BeginInit();
+            groupBox4.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -157,12 +170,22 @@
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(numericZoom);
             groupBox2.Controls.Add(label3);
-            groupBox2.Location = new Point(12, 161);
+            groupBox2.Location = new Point(12, 250);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(589, 183);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "表示";
+            // 
+            // checkBoxCloseDeactive
+            // 
+            checkBoxCloseDeactive.AutoSize = true;
+            checkBoxCloseDeactive.Location = new Point(19, 22);
+            checkBoxCloseDeactive.Name = "checkBoxCloseDeactive";
+            checkBoxCloseDeactive.Size = new Size(164, 19);
+            checkBoxCloseDeactive.TabIndex = 7;
+            checkBoxCloseDeactive.Text = "放置したときにポスト部を畳む";
+            checkBoxCloseDeactive.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -257,44 +280,115 @@
             // 
             label8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label8.AutoSize = true;
-            label8.Location = new Point(318, 432);
+            label8.Location = new Point(318, 459);
             label8.Name = "label8";
             label8.Size = new Size(196, 15);
             label8.TabIndex = 6;
             label8.Text = "※一部項目は再起動時に反映されます";
             label8.TextAlign = ContentAlignment.TopRight;
             // 
+            // groupBox4
+            // 
+            groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox4.Controls.Add(label10);
+            groupBox4.Controls.Add(comboBoxMKVisible);
+            groupBox4.Controls.Add(label11);
+            groupBox4.Controls.Add(label12);
+            groupBox4.Controls.Add(textBoxMKToken);
+            groupBox4.Controls.Add(textBoxMKInstance);
+            groupBox4.Controls.Add(checkBoxSendMisskey);
+            groupBox4.Location = new Point(12, 131);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(589, 113);
+            groupBox4.TabIndex = 9;
+            groupBox4.TabStop = false;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(6, 83);
+            label10.Name = "label10";
+            label10.Size = new Size(108, 15);
+            label10.TabIndex = 8;
+            label10.Text = "デフォルトの表示範囲";
+            // 
+            // comboBoxMKVisible
+            // 
+            comboBoxMKVisible.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxMKVisible.FormattingEnabled = true;
+            comboBoxMKVisible.Location = new Point(120, 80);
+            comboBoxMKVisible.Name = "comboBoxMKVisible";
+            comboBoxMKVisible.Size = new Size(138, 23);
+            comboBoxMKVisible.TabIndex = 7;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 54);
+            label11.Name = "label11";
+            label11.Size = new Size(78, 15);
+            label11.TabIndex = 4;
+            label11.Text = "アクセストークン";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 25);
+            label12.Name = "label12";
+            label12.Size = new Size(82, 15);
+            label12.TabIndex = 1;
+            label12.Text = "インスタンスURL";
+            // 
+            // textBoxMKToken
+            // 
+            textBoxMKToken.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxMKToken.Location = new Point(94, 51);
+            textBoxMKToken.Name = "textBoxMKToken";
+            textBoxMKToken.Size = new Size(489, 23);
+            textBoxMKToken.TabIndex = 3;
+            // 
+            // textBoxMKInstance
+            // 
+            textBoxMKInstance.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBoxMKInstance.Location = new Point(94, 22);
+            textBoxMKInstance.Name = "textBoxMKInstance";
+            textBoxMKInstance.Size = new Size(489, 23);
+            textBoxMKInstance.TabIndex = 2;
+            // 
+            // checkBoxSendMisskey
+            // 
+            checkBoxSendMisskey.AutoSize = true;
+            checkBoxSendMisskey.Location = new Point(6, 0);
+            checkBoxSendMisskey.Name = "checkBoxSendMisskey";
+            checkBoxSendMisskey.Size = new Size(141, 19);
+            checkBoxSendMisskey.TabIndex = 1;
+            checkBoxSendMisskey.Text = "Misskeyへの連動を行う";
+            checkBoxSendMisskey.UseVisualStyleBackColor = true;
+            checkBoxSendMisskey.CheckedChanged += checkBoxSendMisskey_CheckedChanged;
+            // 
             // buttonExit
             // 
             buttonExit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonExit.DialogResult = DialogResult.OK;
-            buttonExit.Location = new Point(520, 428);
+            buttonExit.Location = new Point(520, 455);
             buttonExit.Name = "buttonExit";
             buttonExit.Size = new Size(75, 23);
             buttonExit.TabIndex = 1;
             buttonExit.Text = "完了";
             buttonExit.UseVisualStyleBackColor = true;
             // 
-            // checkBoxCloseDeactive
-            // 
-            checkBoxCloseDeactive.AutoSize = true;
-            checkBoxCloseDeactive.Location = new Point(19, 22);
-            checkBoxCloseDeactive.Name = "checkBoxCloseDeactive";
-            checkBoxCloseDeactive.Size = new Size(164, 19);
-            checkBoxCloseDeactive.TabIndex = 7;
-            checkBoxCloseDeactive.Text = "放置したときにポスト部を畳む";
-            checkBoxCloseDeactive.UseVisualStyleBackColor = true;
-            // 
             // GrobalSettingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = buttonExit;
-            ClientSize = new Size(613, 463);
+            ClientSize = new Size(613, 490);
+            Controls.Add(groupBox4);
             Controls.Add(label8);
             Controls.Add(groupBox2);
             Controls.Add(buttonExit);
             Controls.Add(groupBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "GrobalSettingForm";
@@ -311,6 +405,8 @@
             ((System.ComponentModel.ISupportInitialize)numericActiveReload).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericFocus).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericZoom).EndInit();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -327,5 +423,9 @@
         private NumericUpDown numericActiveReload;
         private ComboBox comboBoxMSVisible;
         private CheckBox checkBoxCloseDeactive;
+        private ComboBox comboBoxMKVisible;
+        private TextBox textBoxMKToken;
+        private TextBox textBoxMKInstance;
+        private CheckBox checkBoxSendMisskey;
     }
 }

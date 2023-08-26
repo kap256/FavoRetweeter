@@ -9,6 +9,10 @@ function send_fr_message(message) {
 
     console.log("send_fr_message:" + message);
     browser.runtime.sendMessage(
-        { "mes": message}
+        { "mes": message }
     );
+};
+function send_fr_skip(message) {
+
+    console.log(message);
 };

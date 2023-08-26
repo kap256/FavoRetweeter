@@ -13,11 +13,12 @@ namespace FRClient
 
         public ListBox.ObjectCollection Images => listImages.Items;
         public bool IsPostStop => checkPostStop.Checked;
-        public Visibility Visibility {
+        public FRVisibility Visibility {
             get {
-                Visibility ret;
-                if (!Enum.TryParse<Visibility>(comboBoxVisble.SelectedItem.ToString(), out ret)) {
-                    return Config.MastodonVisibility;
+                FRVisibility ret;
+
+                if (!FRVisibility.TryParse(comboBoxVisble.SelectedItem.ToString(), out ret)) {
+                    return FRVisibility.Default;
                 }
                 return ret;
             }
@@ -42,6 +43,7 @@ namespace FRClient
 
         public FRClientForm()
         {
+            _=InitAPIs();
             InitializeComponent();
 #if DEBUG
             this.Text = $"{this.Text}-Debug";
@@ -57,12 +59,20 @@ namespace FRClient
             this.Location = Config.ClientPos;
 
 
-            comboBoxVisble.Items.AddRange(Enum.GetNames<Visibility>());
-            comboBoxVisble.SelectedItem = (string)Config.MastodonVisibility;
+            comboBoxVisble.Items.AddRange(FRVisibility.Values);
+            comboBoxVisble.SelectedIndex = 0;
 
             InitTimers();
 
             ResetViewers();
+        }
+
+        private async Task InitAPIs()
+        {
+            var mastodon = Mastodon.Instance.Init();
+            var misskey = Misskey.Instance.Init();
+
+            await Task.WhenAll(mastodon, misskey);
         }
 
         private void InitTimers()
@@ -211,6 +221,10 @@ namespace FRClient
         public void OnPost(FRWebView sender, string data)
         {
             try {
+                if (string.IsNullOrEmpty(data)) {
+                    return;
+                }
+
                 //連動中かどうか？
                 if (IsPostStop) {
                     Log.Info($"PostStop...");
@@ -226,7 +240,7 @@ namespace FRClient
                 //表示範囲はfinaly前に確保しておく。
                 var visi = Visibility;
 
-                //マストドンの処理は別スレで。
+                //APIを叩く処理は別スレで。
                 Task.Run(() =>
                 {
                     RepostTweet(data, images, visi);
@@ -234,24 +248,28 @@ namespace FRClient
 
             } finally {
                 Images.Clear();
-                comboBoxVisble.SelectedItem = (string)Config.MastodonVisibility;
+                comboBoxVisble.SelectedIndex = 0;
             }
         }
 
-        private void RepostTweet(string data, List<string> images, Visibility visi)
+        private void RepostTweet(string data, List<string> images, FRVisibility visi)
         {
+            var st = new Status();
+            st.ParseHanahudaFormat(data);
+            st.Images = images;
+            st.Visi = visi;
+            st.Log(Log);
+
             if (Config.IsSendMastodon) {
-                var st = new Mastodon.Status();
-                st.ParseHanahudaFormat(data);
-                st.Images = images;
-                st.Visi = visi;
-                st.Log(Log);
-
                 var mastodon = Mastodon.Instance;
-                mastodon.Init();
-
                 mastodon.Post(st);
             }
+
+            if (Config.IsSendMisskey) {
+                var misskey = Misskey.Instance;
+                misskey.Post(st);
+            }
+
         }
         #endregion
         #region その他-------------------------------------
@@ -284,6 +302,8 @@ namespace FRClient
         {
             var form = new GrobalSettingForm();
             form.ShowDialog();
+
+            _ = InitAPIs();
         }
 
         private void FRClientForm_ResizeEnd(object sender, EventArgs e)
