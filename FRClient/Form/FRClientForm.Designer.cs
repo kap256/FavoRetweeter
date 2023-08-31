@@ -35,7 +35,7 @@
             Label label2;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRClientForm));
             webViewPost = new FRPostWebView();
-            textBox1 = new TextBox();
+            textBoxWork = new TextBox();
             comboBoxVisble = new ComboBox();
             buttonExpand = new Button();
             buttonAdd = new Button();
@@ -101,7 +101,7 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(textBox1);
+            panel2.Controls.Add(textBoxWork);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(comboBoxVisble);
@@ -118,16 +118,16 @@
             panel2.Size = new Size(444, 595);
             panel2.TabIndex = 6;
             // 
-            // textBox1
+            // textBoxWork
             // 
-            textBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            textBox1.Location = new Point(4, 416);
-            textBox1.MaxLength = 0;
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(418, 137);
-            textBox1.TabIndex = 10;
+            textBoxWork.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            textBoxWork.Location = new Point(4, 416);
+            textBoxWork.MaxLength = 0;
+            textBoxWork.Multiline = true;
+            textBoxWork.Name = "textBoxWork";
+            textBoxWork.ScrollBars = ScrollBars.Vertical;
+            textBoxWork.Size = new Size(418, 137);
+            textBoxWork.TabIndex = 10;
             // 
             // label3
             // 
@@ -298,6 +298,6 @@
         private TableLayoutPanel tableLayoutPanel;
         private Button buttonExpand;
         private ComboBox comboBoxVisble;
-        private TextBox textBox1;
+        private TextBox textBoxWork;
     }
 }

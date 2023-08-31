@@ -27,6 +27,8 @@ namespace FavoRetweeter
         public static ConfInt TwitterActiveReloadInterval;
         public static ConfInt TwitterDeactiveReloadInterval;
 
+        public static ConfInt BackTweetOldestDay;
+
 
         public Config() : base("FavoRetweeter.conf")
         {
@@ -52,7 +54,8 @@ namespace FavoRetweeter
             TwitterActiveReloadInterval = new(ins, "twitter_active_reload_interval", 60,60);
             TwitterDeactiveReloadInterval = new(ins, "twitter_deactive_reload_interval", 60*10,60);
 
-           
+            BackTweetOldestDay = new(ins, "back_tweet_oldest", 3, 1,7);
+
 
 
         }

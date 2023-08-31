@@ -51,7 +51,7 @@ namespace FavoRetweeter
             }
         }
 
-        public string Post(Status st)
+        public Record Post(Status st)
         {
             if (MisskeyAPI == null) {
                 Log.Info($"Client not found.");
@@ -88,7 +88,7 @@ namespace FavoRetweeter
                     mids.ToArray());
                 task.Wait();
                 Log.Info($"Created - {text}");
-                return task.Result;
+                return new Record(task.Result,Record.Type.Misskey);
 
             } catch (Exception ex) {
                 Log.Ex(ex);

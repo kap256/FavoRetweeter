@@ -34,8 +34,8 @@ namespace FRClient
                 }
                 Log.Debug($"exec_init:{LogStr(webv, InitScript)} ");
                 DocumentCode = doc_code;
-                var init = ExecScript(webv, InitScript);
-                await init.ContinueWith(ExecBody);
+                await ExecScript(webv, InitScript);
+                await ExecBody(null);
             } else {
                 await ExecBody(null);
             }
