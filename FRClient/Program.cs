@@ -31,6 +31,7 @@ namespace FRClient
                 throw;
             } finally {
                 ViewerSetting.Save();
+                Records.Save();
             }
         }
     }

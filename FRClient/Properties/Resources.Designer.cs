@@ -97,8 +97,8 @@ namespace FRClient.Properties {
         ///function send_common() {
         ///
         ///    //返信のような気がする……
-        ///    if (document.querySelectorAll(&quot;article&quot;).length &gt; 0) {
-        ///        mylog(&quot;maybe reply&quot;);
+        ///    if (window.innerWidth &lt;600 &amp;&amp; document.querySelectorAll(&quot;article&quot;).length &gt; 0) {
+        ///        send_fr_skip(&quot;maybe reply&quot;);
         ///        return;
         ///    }
         ///
@@ -107,12 +107,11 @@ namespace FRClient.Properties {
         ///    let editor = document.getElementsByClassName(&quot;DraftEditor-root&quot;);
         ///
         ///    if (editor.length &lt;= 0) {
-        ///        mylog(&quot;editor not found.&quot;);
+        ///        send_fr_skip(&quot;editor not found.&quot;);
         ///        return;
         ///    }
         ///    text += editor[0].innerText;
-        ///    if (text.includes(&quot;いまどうしてる？&quot;)) {
-        ///        mylog(&quot;ma [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///    if (text.in [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string fr_common {
             get {
@@ -133,7 +132,12 @@ namespace FRClient.Properties {
         ///function send_fr_message(message) {
         ///
         ///    console.log(&quot;send_fr_message:&quot; + message);
-        ///    window.chrome.webview.postMessage(&quot;MS&quot;+message);
+        ///    window.chrome.webview.postMessage(&quot;MS&quot; + message);
+        ///};
+        ///function send_fr_skip(message) {
+        ///
+        ///    console.log(&quot;send_fr_skip:&quot; + message);
+        ///    window.chrome.webview.postMessage(&quot;SK&quot; + message);
         ///
         ///}; に類似しているローカライズされた文字列を検索します。
         /// </summary>

@@ -41,16 +41,18 @@ namespace FavoRetweeter
                 st.ParseHanahudaFormat(data);
                 st.Log(Log);
 
+                var result = new List<Record>();
                 if (Config.IsSendMastodon) {
                     var mastodon = Mastodon.Instance;
                     await mastodon.Init();
-                    mastodon.Post(st);
+                    result.Add(mastodon.Post(st));
                 }
                 if (Config.IsSendMisskey) {
                     var misskey = Misskey.Instance;
                     await misskey.Init();
-                    misskey.Post(st);
+                    result.Add(misskey.Post(st));
                 }
+                Records.SaveAppend(result);
             }
         }
         string StrsToStr(string[] strs)

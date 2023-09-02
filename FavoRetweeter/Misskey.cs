@@ -51,7 +51,7 @@ namespace FavoRetweeter
             }
         }
 
-        public string Post(Status st)
+        public Record Post(Status st)
         {
             if (MisskeyAPI == null) {
                 Log.Info($"Client not found.");
@@ -60,7 +60,23 @@ namespace FavoRetweeter
 #if DEBUG
             //return null;
 #endif
-            //画像付きツイートへの対応は、現状できませんね。
+            //画像付きツイートへの対応
+            var mids = new List<string>();
+            if (st.Images != null) {
+                for(int i=0;i< st.Images.Count;i++){
+                    var image = st.Images[i];
+                    try {
+                        var task = MisskeyAPI.Drive.Files.Create(
+                            $"{DateTime.Now.ToString("yyyyMMdd_hhmmss")}_{i}{Path.GetExtension(image)}",
+                            image);
+                        task.Wait();
+                        mids.Add(task.Result);
+                    } catch (Exception ex) {
+                        Log.Ex(ex);
+                        return null;
+                    }
+                }
+            }
 
 
             //投稿
@@ -68,10 +84,11 @@ namespace FavoRetweeter
             try {
                 var task = MisskeyAPI.Note.Create(
                     text,
-                    (st.Visi?.Misskey ?? Visi).ToString());
+                    (st.Visi?.Misskey ?? Visi).ToString(),
+                    mids.ToArray());
                 task.Wait();
                 Log.Info($"Created - {text}");
-                return task.Result;
+                return new Record(task.Result,Record.Type.Misskey);
 
             } catch (Exception ex) {
                 Log.Ex(ex);

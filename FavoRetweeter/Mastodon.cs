@@ -1,6 +1,7 @@
 ﻿using Mastonet;
 using Mastonet.Entities;
 using KAPLibNet;
+using System.Threading.Tasks;
 
 namespace FavoRetweeter
 {
@@ -47,7 +48,7 @@ namespace FavoRetweeter
         }
 
 
-        public string Post(Status st)
+        public Record Post(Status st)
         {
             if (Client == null) {
                 Log.Info($"Client not found.");
@@ -84,7 +85,8 @@ namespace FavoRetweeter
                     mids);
                 t_pub.Wait();
                 Log.Info($"Published - {text}");
-                return t_pub.Result.Id;
+
+                return new Record(t_pub.Result.Id, Record.Type.Mastodon);
 
             } catch (Exception ex) {
                 Log.Ex(ex);

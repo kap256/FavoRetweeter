@@ -43,7 +43,7 @@ namespace FRClient
 
         public FRClientForm()
         {
-            _=InitAPIs();
+            _ = InitAPIs();
             InitializeComponent();
 #if DEBUG
             this.Text = $"{this.Text}-Debug";
@@ -262,12 +262,12 @@ namespace FRClient
 
             if (Config.IsSendMastodon) {
                 var mastodon = Mastodon.Instance;
-                mastodon.Post(st);
+                Records.Insert(mastodon.Post(st));
             }
 
             if (Config.IsSendMisskey) {
                 var misskey = Misskey.Instance;
-                misskey.Post(st);
+                Records.Insert(misskey.Post(st));
             }
 
         }
