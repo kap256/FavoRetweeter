@@ -8,10 +8,21 @@
     <Copyright>Copyright © syuilo 2018</Copyright>
     <AssemblyVersion>5.0.1.0</AssemblyVersion>
     <FileVersion>5.0.1.0</FileVersion>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DocumentationFile>bin\Release\Misq.xml</DocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Sample\Sample1.cs" />
+    <Compile Remove="Sample\Sample2.cs" />
+    <Compile Remove="Sample\Sample3.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sample\Sample1.cs" />
+    <None Include="Sample\Sample2.cs" />
+    <None Include="Sample\Sample3.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

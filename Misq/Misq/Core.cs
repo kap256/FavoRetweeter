@@ -23,7 +23,9 @@ namespace Misq
 
 			var ep = $"{host}/api/{endpoint}";
 
-			var content = new StringContent(JsonConvert.SerializeObject(ps),
+			var serial = JsonConvert.SerializeObject(ps);
+
+            var content = new StringContent(serial,
 				Encoding.UTF8, "application/json");
 
 			var res = await client.PostAsync(ep, content);

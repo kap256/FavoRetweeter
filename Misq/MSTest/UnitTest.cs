@@ -72,5 +72,22 @@ namespace MSTest
             Context.WriteLine(result);
             Assert.IsNotNull(result);
         }
+        /// <summary>
+        /// ‰æ‘œ‚Ì“Še
+        /// </summary>
+        [TestMethod]
+        public async Task Media()
+        {
+            var user = new Misq.Me(TestData.Host(), TestData.AccessToken());
+
+            var api = new Misq.Wrapper.API(user);
+
+            var result = await api.Drive.Files.Create(
+                "test.png",
+                @"data\chicken.png");
+
+            Context.WriteLine(result);
+            Assert.IsNotNull(result);
+        }
     }
 }

@@ -9,12 +9,14 @@ namespace Misq.Wrapper
         Me Me;
 
         public readonly Note Note;
+        public readonly Drive Drive;
 
         public API(Me me)
         {
             Me = me;
 
             Note = new(Me);
+            Drive = new(Me);
         }
 
         public async Task<DateTimeOffset> Ping()
