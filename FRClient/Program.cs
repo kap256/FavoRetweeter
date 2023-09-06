@@ -18,13 +18,15 @@ namespace FRClient
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
 
+            //Logger.GetInstance().Lv = ILogger.Level.TRACE;
+
             try {
                 ApplicationConfiguration.Initialize();
 
                 Application.Run(new FRClientForm());
             } catch (Exception ex) {
                 MessageBox.Show(
-                    $"{ex.Message}\n\n{ex.StackTrace}", 
+                    $"{ex.Message}\n\n{ex.StackTrace}",
                     "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);

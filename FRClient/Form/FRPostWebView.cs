@@ -5,7 +5,7 @@ using System.Resources;
 
 namespace FRClient
 {
-    public class FRPostWebView:FRWebView
+    public class FRPostWebView : FRWebView
     {
         #region コンポーネント デザイナーで生成されたコード
         /// <summary>
@@ -52,6 +52,18 @@ namespace FRClient
                 //放置しているだけで定期的に通信するようなもの以外は通す
                 if (e.Request.Uri.Contains("api/2/notifications/")) return true;
                 if (e.Request.Uri.Contains("api/2/badge_count/")) return true;
+                /*
+                if (e.Request.Uri.EndsWith("CreateTweet")) {
+                    TweetRequest = e.Request;
+                    using (var reader = new StreamReader(TweetRequest.Content)) {
+                        var str = reader.ReadToEnd();
+                        using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(str))) {
+                            TweetRequest.Content = stream;
+                            core.NavigateWithWebResourceRequest(TweetRequest);
+                        }
+                    }
+                }
+                */
                 return false;
             }
             //もともとのURIに絡まない者は全て通さない
