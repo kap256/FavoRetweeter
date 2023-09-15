@@ -57,6 +57,7 @@
             textBoxMKInstance = new TextBox();
             checkBoxSendMisskey = new CheckBox();
             buttonExit = new Button();
+            checkBoxMute = new CheckBox();
             groupBox1 = new GroupBox();
             label9 = new Label();
             label2 = new Label();
@@ -280,7 +281,7 @@
             // 
             label8.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label8.AutoSize = true;
-            label8.Location = new Point(318, 459);
+            label8.Location = new Point(318, 473);
             label8.Name = "label8";
             label8.Size = new Size(196, 15);
             label8.TabIndex = 6;
@@ -370,19 +371,30 @@
             // 
             buttonExit.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonExit.DialogResult = DialogResult.OK;
-            buttonExit.Location = new Point(520, 455);
+            buttonExit.Location = new Point(520, 469);
             buttonExit.Name = "buttonExit";
             buttonExit.Size = new Size(75, 23);
             buttonExit.TabIndex = 1;
             buttonExit.Text = "完了";
             buttonExit.UseVisualStyleBackColor = true;
             // 
+            // checkBoxMute
+            // 
+            checkBoxMute.AutoSize = true;
+            checkBoxMute.Location = new Point(18, 439);
+            checkBoxMute.Name = "checkBoxMute";
+            checkBoxMute.Size = new Size(81, 19);
+            checkBoxMute.TabIndex = 10;
+            checkBoxMute.Text = "全体ミュート";
+            checkBoxMute.UseVisualStyleBackColor = true;
+            // 
             // GrobalSettingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = buttonExit;
-            ClientSize = new Size(613, 490);
+            ClientSize = new Size(613, 504);
+            Controls.Add(checkBoxMute);
             Controls.Add(groupBox4);
             Controls.Add(label8);
             Controls.Add(groupBox2);
@@ -427,5 +439,6 @@
         private TextBox textBoxMKToken;
         private TextBox textBoxMKInstance;
         private CheckBox checkBoxSendMisskey;
+        private CheckBox checkBoxMute;
     }
 }
