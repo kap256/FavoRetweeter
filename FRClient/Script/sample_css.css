@@ -8,3 +8,7 @@ div[data-testid = "HoverCard"] {
     display: none;
 }
 
+/*昔はコレで広告を除去していたと思うのだが……*/
+div[data-testid = "cellInnerDiv"]:has([data-testid = "placementTracking"]) {
+    display: none;
+}
