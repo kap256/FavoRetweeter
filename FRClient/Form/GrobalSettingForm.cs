@@ -28,6 +28,7 @@ namespace FRClient
         ComboboxConfig<FRVisibility> MisskeyVisibility;
 
         CheckboxConfig IsCloseDeactive;
+        CheckboxConfig IsMute;
         NumericConfig Zoom;
         NumericConfig FocusInterval;
         NumericConfig ActiveReload;
@@ -50,11 +51,12 @@ namespace FRClient
             comboBoxMKVisible.Items.RemoveAt(0);
 
             IsCloseDeactive = new(Config.IsCloseDeactive, checkBoxCloseDeactive);
+            IsMute = new(Config.IsMute, checkBoxMute);
             Zoom = new(Config.WebviewZoomDefault, numericZoom);
             FocusInterval = new(Config.TwitterFocusInterval, numericFocus);
             ActiveReload = new(Config.TwitterActiveReloadInterval, numericActiveReload);
             DeactiveReload = new(Config.TwitterDeactiveReloadInterval, numericDeactiveReload);
-         }
+        }
 
         private void checkBoxSendMastodon_CheckedChanged(object sender, EventArgs e)
         {
@@ -69,5 +71,6 @@ namespace FRClient
             textBoxMKToken.Enabled = checkBoxSendMisskey.Checked;
             comboBoxMKVisible.Enabled = checkBoxSendMisskey.Checked;
         }
+
     }
 }

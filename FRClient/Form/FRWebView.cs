@@ -66,8 +66,8 @@ namespace FRClient
             task.Wait();
             Env = task.Result;
         }
-        public FRWebView(WebViewBlockHandler h=null,string profile = "")
-            :base()
+        public FRWebView(WebViewBlockHandler h = null, string profile = "")
+            : base()
         {
 
             ReloadJS.FocusInterval = Config.TwitterFocusInterval;
@@ -120,6 +120,8 @@ namespace FRClient
             core.WebResourceRequested += coreWebView2_WebResourceRequested;
             core.NewWindowRequested += coreWebView2_NewWindowRequested;
 
+            core.IsMuted = Config.IsMute;
+
             /*使うかどうか分からんが……
             var bp = new BreakPrivate<WebView2>(webv);
             var ctrl = bp.FieldGet("_coreWebView2Controller") as CoreWebView2Controller;
@@ -161,7 +163,7 @@ namespace FRClient
             var interval = DateTime.Now - LastReload;
             if (interval < ReloadMinInterval) return;
 
-            _=ReloadJS.ExecScript(this, (result) =>
+            _ = ReloadJS.ExecScript(this, (result) =>
             {
                 if (result != "false") {
                     Log.Debug($"Reload success.");
@@ -224,7 +226,7 @@ namespace FRClient
             UpdateDocumentCode();
             IsNavigating = false;
 
-            _=OnSourceChange();
+            _ = OnSourceChange();
         }
         private void frWebView_SourceChanged(object sender, CoreWebView2SourceChangedEventArgs e)
         {
@@ -243,9 +245,9 @@ namespace FRClient
             }
             IsImage = is_image;
 
-            _ =OnSourceChange();
+            _ = OnSourceChange();
         }
-     
+
         private void UpdateDocumentCode()
         {
             DocumentCode = Source.GetHashCode() + (DateTime.Now.Ticks << 32);

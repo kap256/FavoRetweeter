@@ -19,6 +19,7 @@ namespace FavoRetweeter
         public static ConfEnumObject<FRVisibility> MisskeyVisibility;
 
         public static ConfBool IsCloseDeactive;
+        public static ConfBool IsMute;
 
         public static ConfPoint ClientPos;
         public static ConfPoint ClientSize;
@@ -47,17 +48,15 @@ namespace FavoRetweeter
             MisskeyVisibility = new(ins, "misskey_visibility", FRVisibility.Public);
 
             IsCloseDeactive = new(ins, "close_deactive", true);
+            IsMute = new(ins, "mute", false);
             ClientPos = new(ins, "client_pos", 0, 0);
             ClientSize = new(ins, "client_size", 0, 0);
             WebviewZoomDefault = new(ins, "webview_zoom_default", 100, 10, 1000);
             TwitterFocusInterval = new(ins, "twitter_focus_interval", 15);
-            TwitterActiveReloadInterval = new(ins, "twitter_active_reload_interval", 60,60);
-            TwitterDeactiveReloadInterval = new(ins, "twitter_deactive_reload_interval", 60*10,60);
+            TwitterActiveReloadInterval = new(ins, "twitter_active_reload_interval", 60, 60);
+            TwitterDeactiveReloadInterval = new(ins, "twitter_deactive_reload_interval", 60 * 10, 60);
 
-            BackTweetOldestDay = new(ins, "back_tweet_oldest", 3, 1,7);
-
-
-
+            BackTweetOldestDay = new(ins, "back_tweet_oldest", 3, 1, 7);
         }
     }
 }

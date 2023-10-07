@@ -1,10 +1,14 @@
 header[role="banner"] {
     display: none;
 }
-div[data-testid = "cellInnerDiv"]:has([data-testid = "placementTracking"]) {
-    display: none;
-}
 div[role="progressbar"] +div:has([data-testid = "tweetButtonInline"]){
     display: none;
 }
-
+/*
+div[data-testid = "cellInnerDiv"]:has(path[d*="M19.498"]) {
+    display: none;
+}
+*/
+div[data-testid = "cellInnerDiv"]:has(svg+div>span) {
+    display: none;
+}
